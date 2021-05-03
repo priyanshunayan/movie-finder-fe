@@ -1,0 +1,28 @@
+{
+  "name": "boilerplate-react",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "build": "parcel build src/index.html",
+    "format": "prettier \"src/**/*.{js, html, css} \" --write",
+    "lint": "eslint \"src/**/*.{js, jsx} \" --quiet --fix",
+    "dev": "parcel src/index.html",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "description": "",
+  "dependencies": {
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-router-dom": "^5.2.0"
+  },
+  "devDependencies": {
+    "eslint": "^7.21.0",
+    "eslint-config-google": "^0.14.0",
+    "eslint-plugin-prettier": "^3.3.1",
+    "eslint-plugin-react": "^7.22.0",
+    "parcel-bundler": "^1.12.3",
+    "prettier": "^2.2.1"
+  }
+}
