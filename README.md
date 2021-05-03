@@ -11,6 +11,15 @@ This boilerplate uses:
 5. React-DOM - to compliment react
 6. React Router - For navigation
 
+## To start:
+
+> Should have node > 10
+
+1. git clone `https://github.com/priyanshunayan/movie-finder-fe.git`
+2. cd movie-finder-fe
+3. npm install
+4. npm run dev - go to localhost:1234
+
 ## To run
 
 <code> npm run dev </code>
