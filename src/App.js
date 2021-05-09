@@ -7,7 +7,7 @@ import Page from "./components/Page";
 const App = () => {
   return (
     <Router>
-      <div className="container text-center my-4">
+      {/* <div className="container text-center my-4">
         <Link
           to="/page"
           className="text-blue-800 text-center pr-8 hover:text-blue-400"
@@ -18,7 +18,7 @@ const App = () => {
           {" "}
           Home
         </Link>
-      </div>
+      </div> */}
 
       <Switch>
         <Route path="/page">
