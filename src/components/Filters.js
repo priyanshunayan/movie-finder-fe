@@ -97,9 +97,9 @@ const Filters = () => {
             className="block border border-gray-400 mb-2 w-9/12 p-1 rounded-md"
           />
           <div className="font-bold">Genre</div>
-          <div className="flex flex-col p-1">
+          <div className="p-1">
             {genreOptions.map((option) => (
-              <label key={option} className="mb-1">
+              <label key={option} className="mb-1 block w-max">
                 <Field
                   type="checkbox"
                   name="genre"
@@ -140,14 +140,14 @@ const Filters = () => {
           {session_id ? (
             <button
               type="submit"
-              className="bg-blue-700 text-white block px-4 py-2 mx-auto mb-2 hover:bg-blue-800 focus:outline-none"
+              className="bg-blue-700 text-white block px-4 py-2 mx-auto mb-2 hover:bg-blue-800 focus:outline-none rounded-md"
             >
               Join Session
             </button>
           ) : (
             <button
               type="submit"
-              className="bg-blue-700 text-white block px-4 py-2 mx-auto mb-2 hover:bg-blue-800 focus:outline-none"
+              className="bg-blue-700 text-white block px-4 py-2 mx-auto mb-2 hover:bg-blue-800 focus:outline-none rounded-md"
             >
               Create Session
             </button>
