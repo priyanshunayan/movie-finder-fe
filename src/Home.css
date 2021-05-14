@@ -24,3 +24,8 @@
     background-position: 0% -10000px;
   }
 }
+
+:-ms-input-placeholder,
+::placeholder {
+  color: rgba(156, 163, 175, 0);
+}

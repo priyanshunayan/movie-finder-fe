@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import "../Home.css";
 
 const Home = () => {
@@ -13,12 +14,12 @@ const Home = () => {
           Decide what to watch by starting a movie finding session. Set your
           preferences and find movies your both like, together.
         </h2>
-        <a
-          href=""
+        <Link
+          to="/filters"
           className="bg-gray-800 p-3 text-white rounded z-10 font-semibold"
         >
           Start now →
-        </a>
+        </Link>
       </main>
     </div>
   );

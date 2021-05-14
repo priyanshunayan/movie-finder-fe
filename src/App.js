@@ -1,8 +1,8 @@
 import React from "react";
 import { render } from "react-dom";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import Filters from "./components/Filters";
 import Home from "./components/Home";
-import Page from "./components/Page";
 
 const App = () => {
   return (
@@ -21,8 +21,8 @@ const App = () => {
       </div> */}
 
       <Switch>
-        <Route path="/page">
-          <Page />
+        <Route path="/filters">
+          <Filters />
         </Route>
         {/* This should be at the end */}
         <Route path="/">
