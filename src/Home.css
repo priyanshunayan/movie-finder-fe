@@ -29,3 +29,29 @@
 ::placeholder {
   color: rgba(156, 163, 175, 0);
 }
+
+.MuiTabs-indicator {
+  background-color: rgba(59, 130, 246, 1) !important;
+}
+.Mui-selected {
+  color: rgba(59, 130, 246, 1) !important;
+}
+
+.translate-left {
+  transition: all 1s ease-out;
+  transform: translateX(-5000px);
+}
+
+.translate-right {
+  transition: all 1s ease-out;
+  transform: translateX(5000px);
+}
+
+@keyframes animateRight {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(1000%);
+  }
+}
