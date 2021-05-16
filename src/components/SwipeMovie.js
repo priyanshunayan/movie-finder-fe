@@ -46,6 +46,7 @@ const SwipeMovies = () => {
       <div className="cardContainer">
         {movieCards.map((movie) => (
           <TinderCard
+            preventSwipe={["up", "down"]}
             className="swipe"
             key={movie.ImgUrl}
             onSwipe={(dir) => swiped(dir, movie.ImgUrl)}
