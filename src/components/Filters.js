@@ -4,6 +4,7 @@ import { useFormik, Field, FormikProvider } from "formik";
 import { makeStyles } from "@material-ui/core/styles";
 import Slider from "@material-ui/core/Slider";
 import HyperlinkIcon from "../link.svg";
+import { DEV_API_URL } from "../config";
 
 const useStyles = makeStyles({
   root: {
@@ -21,7 +22,68 @@ const Filters = () => {
   const session_id = query.get("session_id");
   const [yearValue, setYearValue] = useState([2010, 2021]);
   const [imdbValue, setImdbValue] = useState([8, 10]);
+  const [sessionFromApi, setSessionFromApi] = useState(null);
   const classes = useStyles();
+
+  const registerQuery = async (values) => {
+    fetch(`${DEV_API_URL}/register-query`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(values),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("success query", data);
+      })
+      .catch((err) => {
+        console.log("An error occurred", err);
+      });
+  };
+
+  const createSessionAndRegisterQuery = (values, data) => {
+    fetch(`${DEV_API_URL}/create-session`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("sucess", data);
+        values["session_id"] = data.session_id;
+        setSessionFromApi(data.session_id);
+        registerQuery(values);
+      })
+      .catch((err) => {
+        console.log("An error occurred", err);
+      });
+  };
+  const joinSessionAndRegisterQuery = (session_id, values) => {
+    const postRequest = { session_id };
+    fetch(`${DEV_API_URL}/create-session`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(postRequest),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        values["session_id"] = data.session_id;
+        const can_join = data.can_join;
+        if (can_join) {
+          setSessionFromApi(data.session_id);
+          registerQuery(values);
+        }
+      })
+      .catch((err) => {
+        console.log("An error occurred", err);
+      });
+  };
+
   const formik = useFormik({
     initialValues: {
       name: "",
@@ -35,8 +97,15 @@ const Filters = () => {
       if (values.genre.length === 0) {
         values.genre.push("All genres");
       }
+      const data = {
+        session_creator: values["name"],
+      };
 
-      alert(JSON.stringify(values, null, 2));
+      if (session_id) {
+        joinSessionAndRegisterQuery(session_id, values);
+      } else {
+        createSessionAndRegisterQuery(values, data);
+      }
     },
   });
 

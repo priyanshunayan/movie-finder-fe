@@ -15,6 +15,9 @@ const App = () => {
         <Route path="/movies">
           <Movies />
         </Route>
+        <Route path="/mo">
+          <Movies />
+        </Route>
         {/* This should be at the end */}
         <Route path="/">
           <Home />
