@@ -17,8 +17,8 @@ const App = () => {
           <Movies />
         </Route>
         <Route path="/session-created">
-        <SessionCreated />
-      </Route>
+          <SessionCreated />
+        </Route>
         {/* This should be at the end */}
         <Route path="/">
           <Home />

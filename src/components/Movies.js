@@ -6,18 +6,21 @@ import Badge from "@material-ui/core/Badge";
 import Tab from "@material-ui/core/Tab";
 import MatchedMovies from "./MatchedMovies";
 import SwipeMovies from "./SwipeMovie";
+import Header from "./Header";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
   return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      {...other}
-    >
-      {value === index && <div>{children}</div>}
+    <div>
+      <div
+        role="tabpanel"
+        hidden={value !== index}
+        id={`simple-tabpanel-${index}`}
+        {...other}
+      >
+        {value === index && <div>{children}</div>}
+      </div>
     </div>
   );
 }
@@ -46,29 +49,48 @@ export default function Movies() {
   };
 
   return (
-    <div className="container w-9/12 mx-auto mt-4 overflow-hidden">
-      <Tabs
-        value={value}
-        onChange={handleChange}
-        aria-label="Movie Swapping and Matches"
-        className="border-b-1 border-gray-300"
-      >
-        <Tab
-          label="Swipe"
-          className={`${Tabclasses.root} ${Tabclasses.wrapper}`}
-        />
-        <Tab
-          label="Matches"
-          className={`${Tabclasses.root} ${Tabclasses.wrapper}`}
-          icon={<Badge badgeContent={4} color="error" />}
-        />
-      </Tabs>
-      <TabPanel value={value} index={0}>
-        <SwipeMovies />
-      </TabPanel>
-      <TabPanel value={value} index={1}>
-        <MatchedMovies />
-      </TabPanel>
+    <div className="bg-gray-50 h-screen">
+      <Header />
+      <p className="my-4 text-green-800 font-medium text-center text-sm">
+        You are swiping with Phil.
+      </p>
+      <div className="">
+        {/* Can we use this tab instead of the one being used in comments? */}
+        <div className="mx-4 mt-4 flex justify-center">
+          <button className="bg-white inline-block mr-2 text-xs font-semibold border border-gray-600 rounded-full py-2 px-4">
+            Swipe
+          </button>
+          <button className="bg-white inline-block text-xs border rounded-full py-2 px-4">
+            Matches{" "}
+            <span className="animate-pulse rounded-full bg-green-800 text-white h-4 w-4 inline-flex items-center justify-center font-semibold">
+              8
+            </span>
+          </button>
+        </div>
+
+        {/* <Tabs
+          value={value}
+          onChange={handleChange}
+          aria-label="Movie Swapping and Matches"
+          className=""
+        >
+          <Tab
+            label="Swipe"
+            className={`${Tabclasses.root} ${Tabclasses.wrapper}`}
+          />
+          <Tab
+            label="Matches"
+            className={`${Tabclasses.root} ${Tabclasses.wrapper}`}
+            icon={<Badge badgeContent={4} color="error" />}
+          />
+        </Tabs> */}
+        <TabPanel value={value} index={0}>
+          <SwipeMovies />
+        </TabPanel>
+        <TabPanel value={value} index={1}>
+          <MatchedMovies />
+        </TabPanel>
+      </div>
     </div>
   );
 }
