@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import "./SwipeMovie.css";
 import TinderCard from "react-tinder-card";
 
 const movies = [
@@ -43,18 +42,18 @@ const SwipeMovies = () => {
 
   return (
     <div>
-      <div className="cardContainer">
+      <div className="mt-4 relative cardContainer w-full flex justify-center flex-wrap h-80">
         {movieCards.map((movie) => (
           <TinderCard
             preventSwipe={["up", "down"]}
-            className="swipe"
+            className="swipe absolute"
             key={movie.ImgUrl}
             onSwipe={(dir) => swiped(dir, movie.ImgUrl)}
             onCardLeftScreen={() => outOfFrame(movie.ImgUrl)}
           >
             <div
               style={{ backgroundImage: "url(" + movie.ImgUrl + ")" }}
-              className="card"
+              className="card bg-white rounded-lg shadow-md relative w-56 h-80 bg-cover"
             >
               {" "}
             </div>

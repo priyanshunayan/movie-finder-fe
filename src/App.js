@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Filters from "./components/Filters";
 import Home from "./components/Home";
 import Movies from "./components/Movies";
+import SessionCreated from "./components/SessionCreated";
 
 const App = () => {
   return (
@@ -15,8 +16,8 @@ const App = () => {
         <Route path="/movies">
           <Movies />
         </Route>
-        <Route path="/mo">
-          <Movies />
+        <Route path="/session-created">
+          <SessionCreated />
         </Route>
         {/* This should be at the end */}
         <Route path="/">
