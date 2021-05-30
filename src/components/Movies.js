@@ -7,6 +7,11 @@ import Tab from "@material-ui/core/Tab";
 import MatchedMovies from "./MatchedMovies";
 import SwipeMovies from "./SwipeMovie";
 import Header from "./Header";
+import { useLocation, useHistory } from "react-router-dom";
+
+function useQuery() {
+  return new URLSearchParams(useLocation().search);
+}
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -41,55 +46,66 @@ const useTabStyles = makeStyles(() => ({
 }));
 
 export default function Movies() {
+  const query = useQuery();
   const Tabclasses = useTabStyles();
   const [value, setValue] = useState(0);
+  const [swipeMoviesActive, setSwipeMoviesActive] = useState(true);
+  const [listMoviesActive, setlistMoviesActive] = useState(false);
+  const session_id = query.get("session_id");
+  const [totalMatched, setTotalMatched] = useState(0);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
+  const updateMatchedCount = (count) => {
+    setTotalMatched(count);
+  };
+
+  const swipeClicked = () => {
+    setlistMoviesActive(false);
+    setSwipeMoviesActive(true);
+  };
+  const matchesClicked = () => {
+    setlistMoviesActive(true);
+    setSwipeMoviesActive(false);
+  };
+
   return (
-    <div className="bg-gray-50 h-screen">
+    <div className="bg-gray-50">
       <Header />
-      <p className="my-4 text-green-800 font-medium text-center text-sm">
-        You are swiping with Phil.
-      </p>
       <div className="">
         {/* Can we use this tab instead of the one being used in comments? */}
         <div className="mx-4 mt-4 flex justify-center">
-          <button className="bg-white inline-block mr-2 text-xs font-semibold border border-gray-600 rounded-full py-2 px-4">
+          <button
+            className="bg-white inline-block mr-2 text-xs font-semibold border border-gray-600 rounded-full py-2 px-4"
+            onClick={swipeClicked}
+          >
             Swipe
           </button>
-          <button className="bg-white inline-block text-xs border rounded-full py-2 px-4">
+          <button
+            className="bg-white inline-block text-xs border rounded-full py-2 px-4"
+            onClick={matchesClicked}
+          >
             Matches{" "}
-            <span className="animate-pulse rounded-full bg-green-800 text-white h-4 w-4 inline-flex items-center justify-center font-semibold">
-              8
+            <span className="animate-pulse rounded-full bg-green-800 text-white h-4 w-4 p-2 inline-flex items-center justify-center font-semibold">
+              {totalMatched}
             </span>
           </button>
         </div>
 
-        {/* <Tabs
-          value={value}
-          onChange={handleChange}
-          aria-label="Movie Swapping and Matches"
-          className=""
-        >
-          <Tab
-            label="Swipe"
-            className={`${Tabclasses.root} ${Tabclasses.wrapper}`}
+        {swipeMoviesActive && (
+          <SwipeMovies
+            session_id={session_id}
+            updateMatchedCount={updateMatchedCount}
           />
-          <Tab
-            label="Matches"
-            className={`${Tabclasses.root} ${Tabclasses.wrapper}`}
-            icon={<Badge badgeContent={4} color="error" />}
+        )}
+        {listMoviesActive && (
+          <MatchedMovies
+            session_id={session_id}
+            updateMatchedCount={updateMatchedCount}
           />
-        </Tabs> */}
-        <TabPanel value={value} index={0}>
-          <SwipeMovies />
-        </TabPanel>
-        <TabPanel value={value} index={1}>
-          <MatchedMovies />
-        </TabPanel>
+        )}
       </div>
     </div>
   );

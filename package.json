@@ -23,6 +23,9 @@
     "react-tinder-card": "^1.4.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.14.3",
+    "@babel/plugin-transform-runtime": "^7.14.3",
+    "@babel/preset-react": "^7.13.13",
     "autoprefixer": "^9.8.6",
     "eslint": "^7.21.0",
     "eslint-config-google": "^0.14.0",

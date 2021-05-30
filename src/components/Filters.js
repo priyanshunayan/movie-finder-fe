@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useHistory } from "react-router-dom";
 import { useFormik, Field, FormikProvider } from "formik";
 import { makeStyles } from "@material-ui/core/styles";
+
 import Slider from "@material-ui/core/Slider";
-import HyperlinkIcon from "../link.svg";
 import { DEV_API_URL } from "../config";
 import Header from "./Header";
 
@@ -20,10 +20,12 @@ function useQuery() {
 
 const Filters = () => {
   let query = useQuery();
+  const history = useHistory();
   const session_id = query.get("session_id");
   const [yearValue, setYearValue] = useState([2010, 2021]);
   const [imdbValue, setImdbValue] = useState([8, 10]);
   const [sessionFromApi, setSessionFromApi] = useState(null);
+  const [sessionCreator, setSessionCreator] = useState("");
   const classes = useStyles();
 
   const registerQuery = async (values) => {
@@ -36,7 +38,14 @@ const Filters = () => {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("success query", data);
+        const session = data.session_id;
+        if (session_id) {
+          history.push(`/movies?session_id=${session_id}`);
+        } else if (session) {
+          history.push(`/session-created?session_id=${session}`);
+        } else {
+          alert("Request failed. Please try again");
+        }
       })
       .catch((err) => {
         console.log("An error occurred", err);
@@ -53,7 +62,6 @@ const Filters = () => {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("sucess", data);
         values["session_id"] = data.session_id;
         setSessionFromApi(data.session_id);
         registerQuery(values);
@@ -64,7 +72,7 @@ const Filters = () => {
   };
   const joinSessionAndRegisterQuery = (session_id, values) => {
     const postRequest = { session_id };
-    fetch(`${DEV_API_URL}/create-session`, {
+    fetch(`${DEV_API_URL}/join-session`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -78,6 +86,8 @@ const Filters = () => {
         if (can_join) {
           setSessionFromApi(data.session_id);
           registerQuery(values);
+        } else {
+          history.push("/");
         }
       })
       .catch((err) => {
@@ -133,7 +143,6 @@ const Filters = () => {
     "Music",
   ];
 
-  const sessionCreator = "Phil";
   return (
     <div className="bg-gray-50">
       <Header />
@@ -142,15 +151,17 @@ const Filters = () => {
           {session_id ? (
             <div className="mb-4 flex rounded-md">
               <div>
-                <img
+                {/* <img
                   src={HyperlinkIcon}
                   width={15}
                   height={15}
                   className="inline mr-3"
-                />
+                /> */}
               </div>
               <div>
-                {sessionCreator} has invited you to the movie finding session.
+                {sessionCreator
+                  ? `${sessionCreator} has invited you to the movie finding session`
+                  : null}
               </div>
             </div>
           ) : null}
