@@ -144,10 +144,19 @@ const Filters = () => {
   ];
 
   return (
-    <div className="bg-gray-50">
+    <div className="min-h-screen bg-gray-50">
       <Header />
       <div className="md:py-8">
-        <div className="container mx-auto p-4 md:w-6/12 bg-white md:rounded md:border">
+        <div className="container mx-auto p-4 pb-16 md:w-6/12 md:rounded md:border">
+          <header className="mb-6">
+            <h1 className="text-2xl font-bold tracking-tighter mb-1">
+              Set preferences
+            </h1>
+            <h2 className="text-sm">
+              You will be shown movies based on your set preferences
+            </h2>
+          </header>
+
           {session_id ? (
             <div className="mb-4 flex rounded-md">
               <div>
@@ -178,12 +187,27 @@ const Filters = () => {
                 onChange={formik.handleChange}
                 value={formik.values.name}
                 placeholder="Phil Dunphy"
-                className="block border border-gray-400 mb-2 w-9/12 p-1 rounded-md"
+                className="block ring-1 ring-gray-200 mb-2 w-full py-1 px-2 rounded-sm"
               />
               <div className="font-bold mt-4 mb-2">Genre</div>
-              <div className="grid grid-cols-2 gap-2">
+              <div className="grid grid-cols-2 gap-1">
                 {genreOptions.map((option) => (
-                  <label key={option} className="mb-1 block w-max">
+                  <label key={option} className="mb-1 block w-full">
+                    <Field
+                      type="checkbox"
+                      name="genre"
+                      value={option}
+                      className="mr-1 checked:bg-blue-600 checked:border-transparent"
+                    />
+                    <span>{option}</span>
+                  </label>
+                ))}
+              </div>
+              {/* dummy Language filter - Replace it with actual language */}
+              <div className="font-bold mt-4 mb-2">Language</div>
+              <div className="grid grid-cols-2 gap-1">
+                {genreOptions.slice(0, 6).map((option) => (
+                  <label key={option} className="mb-1 block w-full">
                     <Field
                       type="checkbox"
                       name="genre"
@@ -195,7 +219,7 @@ const Filters = () => {
                 ))}
               </div>
               <div className="font-bold mt-4">Year Released</div>
-              <div className="text-gray-400 text-sm mt-2">
+              <div className="text-gray-400 text-sm mt-2 w-full">
                 {yearValue[0]}- {yearValue[1]}
               </div>
               <Slider
@@ -221,26 +245,14 @@ const Filters = () => {
                 aria-labelledby="range-slider"
               />
 
-              {session_id ? (
-                <button
-                  type="submit"
-                  className="mt-8 bg-gray-700 font-semibold text-white block px-4 py-2 mx-auto mb-2 hover:bg-gray-800 focus:outline-none rounded-md"
-                >
-                  Join Session
-                </button>
-              ) : (
-                <button
-                  type="submit"
-                  className="mt-8 bg-gray-700 font-semibold text-white block px-4 py-2 mx-auto mb-2 hover:bg-gray-800 focus:outline-none rounded-md"
-                >
-                  Create Session
-                </button>
-              )}
+              <button
+                type="submit"
+                className="mt-8 bg-gray-700 font-medium text-white block px-4 py-2 mx-auto mb-2 hover:bg-gray-800 focus:outline-none rounded w-full"
+              >
+                {session_id ? "Join session" : "Create session"}
+              </button>
             </form>
           </FormikProvider>
-          <p className="text-gray-500 text-xs text-center mt-4">
-            Once you create a session, you will be able to pick movies together.
-          </p>
         </div>
       </div>
     </div>
