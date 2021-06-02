@@ -75,7 +75,7 @@ export default function Movies() {
     <div className="min-h-screen bg-gray-50">
       <Header />
       <div>
-        <div className="p-2 bg-gray-100 border-b grid grid-flow-col gap-2 max-w-full overflow-x-scroll h-28">
+        <div className="p-2 bg-gray-100 border-b grid grid-flow-col gap-2 max-w-full overflow-x-scroll h-28 mb-8">
           <div
             className="card shadow-sm bg-white rounded-sm relative w-16 h-24 bg-cover ring-1 ring-gray-100"
             style={{ backgroundImage: "url(" + moviePoster_Link + ")" }}
