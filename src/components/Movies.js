@@ -72,7 +72,7 @@ export default function Movies() {
   };
 
   return (
-    <div className="bg-gray-50">
+    <div className="min-h-screen bg-gray-50">
       <Header />
       <div className="">
         {/* Can we use this tab instead of the one being used in comments? */}
