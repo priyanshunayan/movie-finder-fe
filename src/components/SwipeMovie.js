@@ -97,12 +97,12 @@ const SwipeMovies = ({ session_id, updateMatchedCount }) => {
 
   return (
     <div>
-      <div className="mt-4 relative cardContainer w-full flex justify-center flex-wrap h-80">
+      <div className="mt-4 relative cardContainer w-full flex justify-center flex-wrap h-96">
         {moviesArray.length > 0 ? (
           moviesArray.map((movie, index) => (
             <TinderCard
               preventSwipe={["up", "down"]}
-              className="swipe absolute"
+              className="swipe absolute h-96"
               key={movie.Poster_Link}
               onSwipe={(dir) =>
                 swiped(dir, movie.Poster_Link, index, movie.Series_Title)
@@ -112,16 +112,24 @@ const SwipeMovies = ({ session_id, updateMatchedCount }) => {
                 style={{
                   backgroundImage: "url(" + movie.Poster_Link + ")",
                 }}
-                className="card bg-white rounded-lg shadow-md relative w-56 h-80 bg-cover"
+                className="card bg-white rounded-md relative w-64 h-96 bg-cover ring-1 ring-gray-100"
               >
-                <b className="bottom-0 right-0 absolute text-lg text-white">
-                  {movie.IMDB_Rating}
-                </b>
+                <p className="bg-gradient-to-b from-transparent to-gray-900 bottom-0 text-center absolute text-sm text-white w-full pb-1 font-medium rounded-br-md rounded-bl-md">
+                  IMDB rating - {movie.IMDB_Rating}
+                </p>
               </div>
             </TinderCard>
           ))
         ) : (
-          <div>There are no more movies of these filters. 🙇🏻‍♂️ </div>
+          <p className="text-sm text-center text-gray-500">
+            <span className="block">That is all we got.</span> Create a new
+            session by changing your preferences.{" "}
+          </p>
+        )}
+        {moviesArray.length > 0 && (
+          <p className="absolute text-xs text-gray-500 text-center -bottom-8">
+            Swipe right to like a movie, left to dislike.
+          </p>
         )}
       </div>
     </div>
