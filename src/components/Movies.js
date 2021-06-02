@@ -1,9 +1,6 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
-import Tabs from "@material-ui/core/Tabs";
-import Badge from "@material-ui/core/Badge";
-import Tab from "@material-ui/core/Tab";
 import MatchedMovies from "./MatchedMovies";
 import SwipeMovies from "./SwipeMovie";
 import Header from "./Header";
@@ -71,12 +68,25 @@ export default function Movies() {
     setSwipeMoviesActive(false);
   };
 
+  const moviePoster_Link =
+    "https://image.tmdb.org/t/p/original/jWpg5ShhtM3TpkxRmDJolWEs2Ic.jpg";
+
   return (
     <div className="min-h-screen bg-gray-50">
       <Header />
-      <div className="">
-        {/* Can we use this tab instead of the one being used in comments? */}
-        <div className="mx-4 mt-4 flex justify-center">
+      <div>
+        <div className="p-2 bg-gray-100 border-b grid grid-flow-col gap-2 max-w-full overflow-x-scroll h-28">
+          <div
+            className="card shadow-sm bg-white rounded-sm relative w-16 h-24 bg-cover ring-1 ring-gray-100"
+            style={{ backgroundImage: "url(" + moviePoster_Link + ")" }}
+          ></div>
+
+          {/* Empty state */}
+          {/* <p className="text-sm text-center text-gray-500 animate-pulse self-center">
+            Matched movies will show up here ...
+          </p> */}
+        </div>
+        {/* <div className="mx-4 mt-4 flex justify-center">
           <button
             className="bg-white inline-block mr-2 text-xs font-semibold border border-gray-600 rounded-full py-2 px-4"
             onClick={swipeClicked}
@@ -92,7 +102,7 @@ export default function Movies() {
               {totalMatched}
             </span>
           </button>
-        </div>
+        </div> */}
 
         {swipeMoviesActive && (
           <SwipeMovies
