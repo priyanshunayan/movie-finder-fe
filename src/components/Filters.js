@@ -204,7 +204,7 @@ const Filters = () => {
                 ))}
               </div>
               {/* dummy Language filter - Replace it with actual language */}
-              <div className="font-bold mt-4 mb-2">Language</div>
+              {/* <div className="font-bold mt-4 mb-2">Language</div>
               <div className="grid grid-cols-2 gap-1">
                 {genreOptions.slice(0, 6).map((option) => (
                   <label key={option} className="mb-1 block w-full">
@@ -217,7 +217,7 @@ const Filters = () => {
                     <span>{option}</span>
                   </label>
                 ))}
-              </div>
+              </div> */}
               <div className="font-bold mt-4">Year Released</div>
               <div className="text-gray-400 text-sm mt-2 w-full">
                 {yearValue[0]}- {yearValue[1]}
