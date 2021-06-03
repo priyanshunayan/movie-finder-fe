@@ -18,22 +18,22 @@ const MatchedMovies = ({ session_id, updateMatchedCount }) => {
 
   return (
     <div>
-      <div className="mt-4 w-full flex justify-center flex-wrap">
+      <div className="p-2 bg-gray-100 border-b grid grid-flow-col gap-2 max-w-full overflow-x-scroll h-28 mb-8">
         {matchedMovies.length > 0 ? (
           matchedMovies.map((movie) => (
             <div
               key={movie.Poster_Link}
               style={{ backgroundImage: "url(" + movie.Poster_Link + ")" }}
-              className="card bg-white rounded-lg shadow-md relative w-32 h-48 bg-cover m-2"
+              className="card shadow-sm bg-white rounded-sm relative w-16 h-24 bg-cover ring-1 ring-gray-100"
             >
               {" "}
             </div>
           ))
         ) : (
-          <div>
-            <div className="text-center"> There are no matches yet 🙇🏻‍♂️ </div>
-            <div className="text-center pt-4"> Keep swiping 🎸 </div>
-          </div>
+          <p className="text-sm text-center text-gray-500 animate-pulse self-center">
+            {" "}
+            There are no matches yet 🙇🏻‍♂️{" "}
+          </p>
         )}
       </div>
     </div>
