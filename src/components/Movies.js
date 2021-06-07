@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import MatchedMovies from "./MatchedMovies";
 import SwipeMovies from "./SwipeMovie";
-import Header from "./Header";
 import { useLocation } from "react-router-dom";
 
 function useQuery() {
@@ -19,7 +18,6 @@ export default function Movies() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Header />
       <div>
         <MatchedMovies
           session_id={session_id}

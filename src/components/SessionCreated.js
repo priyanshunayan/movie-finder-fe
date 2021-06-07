@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useHistory } from "react-router-dom";
-import Header from "./Header";
 import { DEV_API_URL } from "../config";
 function useQuery() {
   return new URLSearchParams(useLocation().search);
@@ -47,12 +46,11 @@ const SessionCreated = () => {
 
   return (
     <div className="bg-gray-50 min-h-screen">
-      <Header />
-      <div className="container mx-auto px-4 text-center pt-8">
+      <div className="container mx-auto px-4 text-center pt-8 md:w-6/12">
         <p className="mt-8 mb-8 text-green-600 font-medium">
           ✓ Session created
         </p>
-        <p>Share this link to invite people...</p>
+        <p>Share this link to invite people to find movies with...</p>
         <div
           type="text"
           className="bg-white block ring-1 p-2 my-4 mx-auto w-full select-all rounded-sm ring-gray-200 truncate text-sm"
@@ -71,8 +69,8 @@ const SessionCreated = () => {
             <p className="mt-8 animate-pulse">Waiting for them to join...</p>
             <p className="mt-2 text-sm text-gray-500">
               {" "}
-              Share the link with whom you want to pick movies. This page will
-              automatically refresh, once they join.{" "}
+              Share the link with whom you want to pick movies with. <br /> This
+              page will automatically refresh, once they join.{" "}
             </p>
           </div>
         )}

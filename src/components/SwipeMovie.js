@@ -122,8 +122,16 @@ const SwipeMovies = ({ session_id, updateMatchedCount }) => {
           ))
         ) : (
           <p className="text-sm text-center text-gray-500">
-            <span className="block">That is all we got.</span> Create a new
-            session by changing your preferences.{" "}
+            <span className="block">¯\_(ツ)_/¯</span>
+            <span className="block">Something went wrong</span>
+            <a
+              href="/filters"
+              title="Create a new session"
+              className="underline hover:no-underline"
+            >
+              Start over
+            </a>{" "}
+            by creating a new session
           </p>
         )}
         {moviesArray.length > 0 && (

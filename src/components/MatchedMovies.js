@@ -32,7 +32,7 @@ const MatchedMovies = ({ session_id, updateMatchedCount }) => {
         ) : (
           <p className="text-sm text-center text-gray-500 animate-pulse self-center">
             {" "}
-            There are no matches yet 🙇🏻‍♂️{" "}
+            Your matches will show up here...
           </p>
         )}
       </div>

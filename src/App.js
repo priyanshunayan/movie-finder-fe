@@ -5,10 +5,13 @@ import Filters from "./components/Filters";
 import Home from "./components/Home";
 import Movies from "./components/Movies";
 import SessionCreated from "./components/SessionCreated";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
 
 const App = () => {
   return (
     <Router>
+      <Header />
       <Switch>
         <Route path="/filters">
           <Filters />
@@ -24,6 +27,7 @@ const App = () => {
           <Home />
         </Route>
       </Switch>
+      <Footer />
     </Router>
   );
 };

@@ -5,7 +5,6 @@ import { makeStyles } from "@material-ui/core/styles";
 
 import Slider from "@material-ui/core/Slider";
 import { DEV_API_URL } from "../config";
-import Header from "./Header";
 
 const useStyles = makeStyles({
   root: {
@@ -145,9 +144,8 @@ const Filters = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Header />
-      <div className="md:py-8">
-        <div className="container mx-auto p-4 pb-16 md:w-6/12 md:rounded md:border">
+      <div className="md:py-16">
+        <div className="container mx-auto p-4 pb-16 md:w-6/12 md:rounded md:border md:bg-white">
           <header className="mb-6">
             <h1 className="text-2xl font-bold tracking-tighter mb-1">
               Set preferences
