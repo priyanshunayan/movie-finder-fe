@@ -10,7 +10,7 @@ function useQuery() {
 export default function Movies() {
   const query = useQuery();
   const session_id = query.get("session_id");
-  const [setTotalMatched] = useState(0);
+  const [, setTotalMatched] = useState(0);
 
   const updateMatchedCount = (count) => {
     setTotalMatched(count);
