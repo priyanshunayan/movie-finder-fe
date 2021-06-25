@@ -105,6 +105,7 @@ const Filters = () => {
       genre: [],
     },
     onSubmit: (values) => {
+      localStorage.clear();
       values["start_year"] = yearValue[0];
       values["end_year"] = yearValue[1];
       values["rating_start"] = imdbValue[0];
