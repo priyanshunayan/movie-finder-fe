@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation, useHistory } from "react-router-dom";
 import { useFormik, Field, FormikProvider } from "formik";
 import { makeStyles } from "@material-ui/core/styles";
@@ -25,6 +25,10 @@ const Filters = () => {
   const [imdbValue, setImdbValue] = useState([8, 10]);
   const [sessionFromApi, setSessionFromApi] = useState(null);
   const [sessionCreator, setSessionCreator] = useState("");
+  const [initialValues, setInitialValues] = useState({
+    name: "",
+    genre: [],
+  });
   const classes = useStyles();
 
   const registerQuery = async (values) => {
@@ -99,11 +103,44 @@ const Filters = () => {
       });
   };
 
+  useEffect(() => {
+    if (session_id) {
+      fetch(`${DEV_API_URL}/selected_filters/${session_id}`)
+        .then((res) => res.json())
+        .then((res) => {
+          if (res.result.length > 0) {
+            formik.setValues({ genre: res?.result[0].genre.split(",") || [] });
+            setYearValue([
+              Number(res?.result[0].start_year),
+              Number(res?.result[0].end_year),
+            ]);
+            setImdbValue([
+              Number(res?.result[0].rating_start),
+              Number(res?.result[0].rating_end),
+            ]);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  }, []);
+
+  useEffect(() => {
+    if (session_id) {
+      fetch(`${DEV_API_URL}/session_creator/${session_id}`)
+        .then((res) => res.json())
+        .then((res) => {
+          setSessionCreator(res.session_creator);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  }, []);
+
   const formik = useFormik({
-    initialValues: {
-      name: "",
-      genre: [],
-    },
+    initialValues: initialValues,
     onSubmit: (values) => {
       localStorage.clear();
       values["start_year"] = yearValue[0];
@@ -172,9 +209,14 @@ const Filters = () => {
                 /> */}
               </div>
               <div>
-                {sessionCreator
-                  ? `${sessionCreator} has invited you to the movie finding session`
-                  : null}
+                {sessionCreator ? (
+                  <div>
+                    <span className="font-bold capitalize">
+                      {sessionCreator}
+                    </span>{" "}
+                    has invited you to the movie finding session.
+                  </div>
+                ) : null}
               </div>
             </div>
           ) : null}
