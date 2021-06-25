@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import TinderCard from "react-tinder-card";
-import { DEV_API_URL } from "../config";
+import { DEV_API_URL, SOCKET_URL } from "../config";
 
 const SwipeMovies = ({ session_id, updateMatchedCount }) => {
   // const [timesSwiped, setTimesSwiped] = useState(0);
@@ -12,6 +12,7 @@ const SwipeMovies = ({ session_id, updateMatchedCount }) => {
   const [moviesArray, setMoviesArray] = useState(movies);
 
   useEffect(() => {
+    window.socket = new WebSocket(`${SOCKET_URL}/matched_movie/${session_id}`);
     /* Call only when no array in local storage */
     const moviesFromLocalStorage = JSON.parse(localStorage.getItem("movies"));
     if (!moviesFromLocalStorage) {
@@ -48,6 +49,7 @@ const SwipeMovies = ({ session_id, updateMatchedCount }) => {
   }, []);
 
   const likeMovie = (session_id, movie_title) => {
+    window.socket.send("liked_movie");
     fetch(`${DEV_API_URL}/like-movie`, {
       method: "POST",
       headers: {

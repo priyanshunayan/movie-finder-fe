@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useHistory } from "react-router-dom";
-import { DEV_API_URL } from "../config";
+import { DEV_API_URL, SOCKET_URL } from "../config";
+import { socket } from "../App";
+
 function useQuery() {
   return new URLSearchParams(useLocation().search);
 }
@@ -18,31 +20,33 @@ const SessionCreated = () => {
       `${window.location.origin}/filters?session_id=${session_id}`
     );
     setIsCopied(!isCopied);
+    window.socket.onmessage = function (message) {
+      let data = JSON.parse(message.data);
+      if (data.refresh && data.session_id === session_id) {
+        setRefresh(1);
+        history.push(`/movies?session_id=${session_id}`);
+      }
+    };
   };
 
   useEffect(() => {
-    function callCanJoinApi() {
-      fetch(`${DEV_API_URL}/has-joined/${session_id}`)
-        .then((res) => {
-          return res.json();
-        })
-        .then((res) => {
-          if (res.refresh) {
-            setRefresh(1);
-            history.push(`/movies?session_id=${session_id}`);
-          }
-        })
-        .catch((e) => {
-          console.log(e);
-        });
-    }
-    callCanJoinApi();
-    const interval = setInterval(callCanJoinApi, 2000);
-
-    return () => {
-      clearInterval(interval);
-    };
-  }, [refresh]);
+    // function callCanJoinApi() {
+    //   fetch(`${DEV_API_URL}/has-joined/${session_id}`)
+    //     .then((res) => {
+    //       return res.json();
+    //     })
+    //     .then((res) => {
+    //       if (res.refresh) {
+    //         setRefresh(1);
+    //         history.push(`/movies?session_id=${session_id}`);
+    //       }
+    //     })
+    //     .catch((e) => {
+    //       console.log(e);
+    //     });
+    // }
+    // callCanJoinApi();
+  }, []);
 
   return (
     <div className="bg-gray-50 min-h-screen">

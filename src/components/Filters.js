@@ -4,7 +4,7 @@ import { useFormik, Field, FormikProvider } from "formik";
 import { makeStyles } from "@material-ui/core/styles";
 
 import Slider from "@material-ui/core/Slider";
-import { DEV_API_URL } from "../config";
+import { DEV_API_URL, SOCKET_URL } from "../config";
 
 const useStyles = makeStyles({
   root: {
@@ -38,6 +38,11 @@ const Filters = () => {
       .then((response) => response.json())
       .then((data) => {
         const session = data.session_id;
+        const socket = new WebSocket(`${SOCKET_URL}/can_join/${session}`);
+        socket.onopen = function () {
+          console.log("Socket open.");
+        };
+        window.socket = socket;
         if (session_id) {
           history.push(`/movies?session_id=${session_id}`);
         } else if (session) {

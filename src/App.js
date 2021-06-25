@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { render } from "react-dom";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Filters from "./components/Filters";
@@ -7,8 +7,11 @@ import Movies from "./components/Movies";
 import SessionCreated from "./components/SessionCreated";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import { SOCKET_URL } from "./config";
 
 const App = () => {
+  useEffect(() => {}, []);
+
   return (
     <Router>
       <Header />
@@ -31,5 +34,8 @@ const App = () => {
     </Router>
   );
 };
+
+const socket = new WebSocket(`${SOCKET_URL}`);
+window.socket = socket;
 
 render(<App />, document.getElementById("root"));

@@ -1,15 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { DEV_API_URL } from "../config";
 
-const MatchedMovies = ({ session_id, updateMatchedCount }) => {
+const MatchedMovies = ({ session_id }) => {
   const [matchedMovies, setMatchedMovies] = useState([]);
 
   useEffect(() => {
+    window.socket.onmessage = function (message) {
+      let data = JSON.parse(message.data);
+      if (data.session_id === session_id && data.matched_movie_res) {
+        setMatchedMovies(data.data);
+      }
+    };
     fetch(`${DEV_API_URL}/matched-movies?session_id=${session_id}`)
       .then((res) => res.json())
       .then((res) => {
         setMatchedMovies(res.data);
-        updateMatchedCount(res.totalItems);
       })
       .catch((err) => {
         console.log(err);
