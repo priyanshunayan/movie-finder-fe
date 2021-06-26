@@ -38,10 +38,7 @@ const MatchedMovies = ({ session_id }) => {
             </div>
           ))
         ) : (
-          <p className="text-sm text-gray-500 animate-pulse self-center justify-self-center pl-4">
-            {" "}
-            Your matches will show up here...
-          </p>
+          <div className="card shadow-sm animate-pulse bg-gray-200 rounded-sm relative w-16 lg:w-20 h-24 lg:h-28"></div>
         )}
       </div>
     </div>
