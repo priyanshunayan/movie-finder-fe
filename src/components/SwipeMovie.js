@@ -40,9 +40,11 @@ const SwipeMovies = ({ session_id, updateMatchedCount }) => {
             "movies",
             JSON.stringify(moviesFromLocalStorage)
           );
+          setLoading(false);
         })
         .catch((err) => {
           console.log(err);
+          setLoading(false);
         });
     } else {
       if (moviesArray.length === 0) {
