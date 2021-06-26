@@ -109,7 +109,10 @@ const Filters = () => {
         .then((res) => res.json())
         .then((res) => {
           if (res.result.length > 0) {
-            formik.setValues({ genre: res?.result[0].genre.split(",") || [] });
+            formik.setValues({
+              genre: res?.result[0].genre.split(","),
+              language: res?.result[0].language.split(","),
+            });
             setYearValue([
               Number(res?.result[0].start_year),
               Number(res?.result[0].end_year),
@@ -185,6 +188,35 @@ const Filters = () => {
     "Music",
   ];
 
+  const languages = [
+    {
+      iso_639_1: "hi",
+      english_name: "Hindi",
+      name: "हिन्दी",
+    },
+    {
+      iso_639_1: "en",
+      english_name: "English",
+      name: "English",
+    },
+    {
+      iso_639_1: "fr",
+      english_name: "French",
+      name: "Français",
+    },
+
+    {
+      iso_639_1: "it",
+      english_name: "Italian",
+      name: "Italiano",
+    },
+    {
+      iso_639_1: "es",
+      english_name: "Spanish",
+      name: "Español",
+    },
+  ];
+
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="md:py-16">
@@ -200,14 +232,6 @@ const Filters = () => {
 
           {session_id ? (
             <div className="mb-4 flex rounded-md">
-              <div>
-                {/* <img
-                  src={HyperlinkIcon}
-                  width={15}
-                  height={15}
-                  className="inline mr-3"
-                /> */}
-              </div>
               <div>
                 {sessionCreator ? (
                   <div>
@@ -250,20 +274,20 @@ const Filters = () => {
                 ))}
               </div>
               {/* dummy Language filter - Replace it with actual language */}
-              {/* <div className="font-bold mt-4 mb-2">Language</div>
+              <div className="font-bold mt-4 mb-2">Language</div>
               <div className="grid grid-cols-2 gap-1">
-                {genreOptions.slice(0, 6).map((option) => (
-                  <label key={option} className="mb-1 block w-full">
+                {languages.slice(0, 6).map((option) => (
+                  <label key={option.iso_639_1} className="mb-1 block w-full">
                     <Field
                       type="checkbox"
-                      name="genre"
-                      value={option}
+                      name="language"
+                      value={option.iso_639_1}
                       className="mr-1 checked:bg-blue-600 checked:border-transparent"
                     />
-                    <span>{option}</span>
+                    <span>{option.english_name}</span>
                   </label>
                 ))}
-              </div> */}
+              </div>
               <div className="font-bold mt-4">Year Released</div>
               <div className="text-gray-400 text-sm mt-2 w-full">
                 {yearValue[0]}- {yearValue[1]}
