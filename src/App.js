@@ -35,7 +35,4 @@ const App = () => {
   );
 };
 
-const socket = new WebSocket(`${SOCKET_URL}`);
-window.socket = socket;
-
 render(<App />, document.getElementById("root"));

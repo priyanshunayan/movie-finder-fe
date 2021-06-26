@@ -28,8 +28,11 @@ const Filters = () => {
   const [initialValues, setInitialValues] = useState({
     name: "",
     genre: [],
+    language: ["en"],
   });
   const classes = useStyles();
+
+
 
   const registerQuery = async (values) => {
     fetch(`${DEV_API_URL}/register-query`, {
@@ -42,11 +45,6 @@ const Filters = () => {
       .then((response) => response.json())
       .then((data) => {
         const session = data.session_id;
-        const socket = new WebSocket(`${SOCKET_URL}/can_join/${session}`);
-        socket.onopen = function () {
-          console.log("Socket open.");
-        };
-        window.socket = socket;
         if (session_id) {
           history.push(`/movies?session_id=${session_id}`);
         } else if (session) {
@@ -54,6 +52,13 @@ const Filters = () => {
         } else {
           alert("Request failed. Please try again");
         }
+          const can_join_socket = new WebSocket(
+            `${SOCKET_URL}/can_join/${session_id}`
+          );
+          can_join_socket.onopen = function () {
+            console.log("Can join Socket open.");
+          };
+          window.can_join_socket = can_join_socket;
       })
       .catch((err) => {
         console.log("An error occurred", err);
@@ -190,15 +195,16 @@ const Filters = () => {
 
   const languages = [
     {
-      iso_639_1: "hi",
-      english_name: "Hindi",
-      name: "हिन्दी",
-    },
-    {
       iso_639_1: "en",
       english_name: "English",
       name: "English",
     },
+    {
+      iso_639_1: "hi",
+      english_name: "Hindi",
+      name: "हिन्दी",
+    },
+
     {
       iso_639_1: "fr",
       english_name: "French",

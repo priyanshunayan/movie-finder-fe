@@ -3,14 +3,17 @@ import { DEV_API_URL } from "../config";
 
 const MatchedMovies = ({ session_id }) => {
   const [matchedMovies, setMatchedMovies] = useState([]);
-
-  useEffect(() => {
-    window.socket.onmessage = function (message) {
+  
+  if (window.matched_movie_socket) {
+    window.matched_movie_socket.onmessage = function (message) {
       let data = JSON.parse(message.data);
       if (data.session_id === session_id && data.matched_movie_res) {
         setMatchedMovies(data.data);
       }
     };
+  }
+
+  useEffect(() => {
     fetch(`${DEV_API_URL}/matched-movies?session_id=${session_id}`)
       .then((res) => res.json())
       .then((res) => {

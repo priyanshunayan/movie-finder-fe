@@ -20,7 +20,17 @@ const SessionCreated = () => {
       `${window.location.origin}/filters?session_id=${session_id}`
     );
     setIsCopied(!isCopied);
-    window.socket.onmessage = function (message) {
+    
+    if (!window.can_join_socket) {
+      const can_join_socket = new WebSocket(
+        `${SOCKET_URL}/can_join/${session_id}`
+      );
+      can_join_socket.onopen = function () {
+        console.log("Can join Socket open.");
+      };
+      window.can_join_socket = can_join_socket;
+    }
+    window.can_join_socket.onmessage = function (message) {
       let data = JSON.parse(message.data);
       if (data.refresh && data.session_id === session_id) {
         setRefresh(1);

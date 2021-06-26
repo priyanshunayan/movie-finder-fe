@@ -10,9 +10,12 @@ const SwipeMovies = ({ session_id, updateMatchedCount }) => {
   const movies = [];
 
   const [moviesArray, setMoviesArray] = useState(movies);
+  const matched_movie_socket = new WebSocket(
+    `${SOCKET_URL}/matched_movie/${session_id}`
+  );
+  window.matched_movie_socket = matched_movie_socket;
 
   useEffect(() => {
-    window.socket = new WebSocket(`${SOCKET_URL}/matched_movie/${session_id}`);
     /* Call only when no array in local storage */
     const moviesFromLocalStorage = JSON.parse(localStorage.getItem("movies"));
     if (!moviesFromLocalStorage) {
@@ -47,9 +50,13 @@ const SwipeMovies = ({ session_id, updateMatchedCount }) => {
       }
     }
   }, []);
-
   const likeMovie = (session_id, movie_title) => {
-    window.socket.send("liked_movie");
+    if (window.matched_movie_socket) {
+      if (window.matched_movie_socket.readyState) {
+        window.matched_movie_socket.send("liked_movie");
+      }
+    }
+
     fetch(`${DEV_API_URL}/like-movie`, {
       method: "POST",
       headers: {
