@@ -10,6 +10,12 @@ const SwipeMovies = ({ session_id, updateMatchedCount }) => {
   const movies = [];
 
   const [moviesArray, setMoviesArray] = useState(movies);
+  const [loading, setLoading] = useState(true);
+  const [detailVisibility, setDetailVisibility] = useState(false);
+
+  const handleDetailClick = () => {
+    setDetailVisibility((detailVisibility) => !detailVisibility);
+  };
 
   useEffect(() => {
     window.socket = new WebSocket(`${SOCKET_URL}/matched_movie/${session_id}`);
@@ -44,6 +50,7 @@ const SwipeMovies = ({ session_id, updateMatchedCount }) => {
           -1 * itemsToSplice
         );
         setMoviesArray(splicedArray);
+        setLoading(false);
       }
     }
   }, []);
@@ -99,12 +106,31 @@ const SwipeMovies = ({ session_id, updateMatchedCount }) => {
 
   return (
     <div>
+      {loading && (
+        <div className="grid justify-items-center">
+          {" "}
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-6 w-6 animate-spin text-gray-500"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+            />
+          </svg>
+        </div>
+      )}
       <div className="mt-4 relative cardContainer w-full flex justify-center flex-wrap h-96">
         {moviesArray.length > 0 ? (
           moviesArray.map((movie, index) => (
             <TinderCard
               preventSwipe={["up", "down"]}
-              className="swipe absolute h-96"
+              className="swipe absolute h-96 z-10"
               key={movie.Poster_Link}
               onSwipe={(dir) =>
                 swiped(dir, movie.Poster_Link, index, movie.Series_Title)
@@ -116,16 +142,23 @@ const SwipeMovies = ({ session_id, updateMatchedCount }) => {
                 }}
                 className="card bg-white rounded-md relative w-64 h-96 bg-cover ring-1 ring-gray-100"
               >
-                <p className="bg-gradient-to-b from-transparent to-gray-900 bottom-0 text-center absolute text-sm text-white w-full pb-1 font-medium rounded-br-md rounded-bl-md">
-                  IMDB rating - {movie.IMDB_Rating}
-                </p>
+                {detailVisibility && (
+                  <div className="bg-gradient-to-b from-transparent to-gray-900 h-full rounded-br-md rounded-bl-md">
+                    <p className="absolute text-sm text-white w-full pb-1 h-48 bottom-8 overflow-hidden font-medium rounded-br-md rounded-bl-md overflow-ellipsis p-2">
+                      {movie.Overview.slice(0, 280)}...
+                    </p>
+                    <p className="bottom-0 text-center absolute text-sm text-white w-full pb-1 font-semibold ">
+                      IMDB - {movie.IMDB_Rating}
+                    </p>
+                  </div>
+                )}
               </div>
             </TinderCard>
           ))
         ) : (
           <p className="text-sm text-center text-gray-500">
             <span className="block">¯\_(ツ)_/¯</span>
-            <span className="block">Something went wrong</span>
+            <span className="block">That's all the movies we got.</span>
             <a
               href="/filters"
               title="Create a new session"
@@ -137,9 +170,17 @@ const SwipeMovies = ({ session_id, updateMatchedCount }) => {
           </p>
         )}
         {moviesArray.length > 0 && (
-          <p className="absolute text-xs text-gray-500 text-center -bottom-8">
-            Swipe right to like a movie, left to dislike.
-          </p>
+          <div className="absolute -bottom-16">
+            <p className="text-xs text-gray-500 text-center ">
+              Swipe right to like a movie, left to dislike.
+            </p>
+            <p
+              className="text-xs text-gray-500 text-center mt-2 underline"
+              onClick={handleDetailClick}
+            >
+              {detailVisibility ? "Hide movie details" : "Show movie details"}
+            </p>
+          </div>
         )}
       </div>
     </div>

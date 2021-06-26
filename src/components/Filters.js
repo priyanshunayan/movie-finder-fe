@@ -238,7 +238,7 @@ const Filters = () => {
               <div className="font-bold mt-4 mb-2">Genre</div>
               <div className="grid grid-cols-2 gap-1">
                 {genreOptions.map((option) => (
-                  <label key={option} className="mb-1 block w-full">
+                  <label key={option} className="mb-1 block w-full py-1">
                     <Field
                       type="checkbox"
                       name="genre"
