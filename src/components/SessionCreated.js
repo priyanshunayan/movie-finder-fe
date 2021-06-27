@@ -108,11 +108,11 @@ const SessionCreated = () => {
             </p>
             <button
               onClick={callCanJoinApi}
-              className="text-gray-500 font-medium mt-4 underline"
+              className="text-gray-500 text-sm mt-4 underline"
             >
               Taking too long? Refresh now
             </button>
-            <div className="mt-4">
+            <div className="mt-4 text-sm">
               {showCanJoinText ? "The other person hasn't joined yet 🙇🏻‍♂️" : null}
             </div>
           </div>

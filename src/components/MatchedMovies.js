@@ -30,13 +30,19 @@ const MatchedMovies = ({ session_id }) => {
       <div className="p-2 bg-gray-100 border-b grid grid-flow-col gap-2 max-w-full overflow-x-scroll no-scrollbar h-28 lg:h-32 mb-8 auto-cols-max">
         {matchedMovies.length > 0 ? (
           matchedMovies.map((movie) => (
-            <div
+            <a
+              href={`https://www.justwatch.com/us/search?q=${movie.Series_Title}`}
               key={movie.Poster_Link}
-              style={{ backgroundImage: "url(" + movie.Poster_Link + ")" }}
-              className="card shadow-sm bg-white rounded-sm relative w-16 lg:w-20 h-24 lg:h-28 bg-cover ring-1 ring-gray-100"
+              target="_blank"
+              rel="noreferrer"
             >
-              {" "}
-            </div>
+              <div
+                style={{ backgroundImage: "url(" + movie.Poster_Link + ")" }}
+                className="card shadow-sm bg-white rounded-sm relative w-16 lg:w-20 h-24 lg:h-28 bg-cover ring-1 ring-gray-100"
+              >
+                {" "}
+              </div>
+            </a>
           ))
         ) : (
           <div>
