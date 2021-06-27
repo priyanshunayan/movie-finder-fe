@@ -179,16 +179,18 @@ const Filters = () => {
   const genreOptions = [
     "All genres",
     "Drama",
+    "Romance",
+    "Music",
+    "Thriller",
     "Action",
     "Crime",
     "Adventure",
-    "Biography",
-    "Comedy",
+    "Documentary",
+    "Science Fiction",
+    "Fantasy",
     "Animation",
-    "Thriller",
+    "Comedy",
     "Horror",
-    "Romance",
-    "Music",
   ];
 
   const languages = [
