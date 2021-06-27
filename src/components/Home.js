@@ -76,7 +76,7 @@ const Home = () => {
               <img
                 className="w-full rounded-md lg:h-full lg:w-auto lg:max-w-none"
                 src={heroImage}
-                alt=""
+                alt="FilmFinder.app Illustration"
               />
             </div>
           </div>
