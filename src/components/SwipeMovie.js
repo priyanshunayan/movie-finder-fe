@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import TinderCard from "react-tinder-card";
 import { DEV_API_URL, SOCKET_URL } from "../config";
+import { Switch } from "@headlessui/react";
 
 const SwipeMovies = ({ session_id, updateMatchedCount }) => {
   // const [timesSwiped, setTimesSwiped] = useState(0);
@@ -20,6 +21,10 @@ const SwipeMovies = ({ session_id, updateMatchedCount }) => {
   const handleDetailClick = () => {
     setDetailVisibility((detailVisibility) => !detailVisibility);
   };
+
+  function classNames(...classes) {
+    return classes.filter(Boolean).join(" ");
+  }
 
   useEffect(() => {
     /* Call only when no array in local storage */
@@ -114,7 +119,7 @@ const SwipeMovies = ({ session_id, updateMatchedCount }) => {
   };
 
   return (
-    <div>
+    <div className="grid justify-items-center">
       {loading && (
         <div className="grid justify-items-center">
           {" "}
@@ -134,7 +139,12 @@ const SwipeMovies = ({ session_id, updateMatchedCount }) => {
           </svg>
         </div>
       )}
-      <div className="mt-4 relative cardContainer w-full flex justify-center flex-wrap h-96">
+      <div
+        className="mt-4 relative cardContainer flex justify-center flex-wrap h-96 w-64 rounded-md bg-white"
+        style={{
+          boxShadow: " 0 32px 38px -2px rgba(0, 0, 0, 0.11)",
+        }}
+      >
         {moviesArray.length > 0 ? (
           moviesArray.map((movie, index) => (
             <TinderCard
@@ -149,11 +159,11 @@ const SwipeMovies = ({ session_id, updateMatchedCount }) => {
                 style={{
                   backgroundImage: "url(" + movie.Poster_Link + ")",
                 }}
-                className="card bg-white rounded-md relative w-64 h-96 bg-cover ring-1 ring-gray-100"
+                className="card bg-white rounded-md relative w-64 h-96 bg-cover"
               >
                 {detailVisibility && (
-                  <div className="bg-gradient-to-b from-transparent to-gray-900 h-full rounded-br-md rounded-bl-md">
-                    <p className="absolute text-sm text-white w-full pb-1 h-48 bottom-8 overflow-hidden font-medium rounded-br-md rounded-bl-md overflow-ellipsis p-2">
+                  <div className="bg-gradient-to-b from-transparent via-gray-800 to-gray-900 h-full rounded-md">
+                    <p className="absolute text-sm text-white w-full pb-1 h-52 bottom-8 overflow-hidden font-medium rounded-md overflow-ellipsis px-4">
                       {movie.Overview.slice(0, 280)}...
                     </p>
                     <p className="bottom-0 text-center absolute text-sm text-white w-full pb-1 font-semibold ">
@@ -165,7 +175,7 @@ const SwipeMovies = ({ session_id, updateMatchedCount }) => {
             </TinderCard>
           ))
         ) : (
-          <p className="text-sm text-center text-gray-500">
+          <p className="text-sm text-center text-gray-500 p-4">
             <span className="block">¯\_(ツ)_/¯</span>
             <span className="block">That's all the movies we got.</span>
             <a
@@ -179,16 +189,34 @@ const SwipeMovies = ({ session_id, updateMatchedCount }) => {
           </p>
         )}
         {moviesArray.length > 0 && (
-          <div className="absolute -bottom-16">
+          <div className="absolute -bottom-20 grid justify-items-center">
             <p className="text-xs text-gray-500 text-center ">
               Swipe right to like a movie, left to dislike.
             </p>
-            <p
-              className="text-xs text-gray-500 text-center mt-2 underline"
-              onClick={handleDetailClick}
-            >
-              {detailVisibility ? "Hide movie details" : "Show movie details"}
-            </p>
+            <Switch.Group as="div" className="flex items-center mt-4">
+              <Switch
+                checked={detailVisibility}
+                onChange={handleDetailClick}
+                className={classNames(
+                  detailVisibility ? "bg-gray-600" : "bg-gray-200",
+                  "relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+                )}
+              >
+                <span className="sr-only">Enable movie details</span>
+                <span
+                  aria-hidden="true"
+                  className={classNames(
+                    detailVisibility ? "translate-x-5" : "translate-x-0",
+                    "pointer-events-none inline-block h-5 w-5 rounded-full bg-white shadow transform ring-0 transition ease-in-out duration-200"
+                  )}
+                />
+              </Switch>
+              <Switch.Label as="span" className="ml-3">
+                <span className="text-sm font-medium text-gray-900">
+                  Show movie details
+                </span>
+              </Switch.Label>
+            </Switch.Group>
           </div>
         )}
       </div>
