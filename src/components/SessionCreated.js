@@ -11,6 +11,8 @@ const SessionCreated = () => {
   const history = useHistory();
   const [isCopied, setIsCopied] = useState(false);
   const [refresh, setRefresh] = useState(false);
+  const [canJoin, setCanJoin] = useState(0);
+  const [showCanJoinText, setShowCanJoinText] = useState(false);
   const session_id = query.get("session_id");
 
   /* Keep calling session_id every 2 seconds to check if started and navigate to movies*/
@@ -20,7 +22,7 @@ const SessionCreated = () => {
       `${window.location.origin}/filters?session_id=${session_id}`
     );
     setIsCopied(!isCopied);
-    
+
     if (!window.can_join_socket) {
       const can_join_socket = new WebSocket(
         `${SOCKET_URL}/can_join/${session_id}`
@@ -40,23 +42,27 @@ const SessionCreated = () => {
   };
 
   useEffect(() => {
-    // function callCanJoinApi() {
-    //   fetch(`${DEV_API_URL}/has-joined/${session_id}`)
-    //     .then((res) => {
-    //       return res.json();
-    //     })
-    //     .then((res) => {
-    //       if (res.refresh) {
-    //         setRefresh(1);
-    //         history.push(`/movies?session_id=${session_id}`);
-    //       }
-    //     })
-    //     .catch((e) => {
-    //       console.log(e);
-    //     });
-    // }
-    // callCanJoinApi();
+    window.scrollTo(0, 0);
   }, []);
+
+  function callCanJoinApi() {
+    fetch(`${DEV_API_URL}/has-joined/${session_id}`)
+      .then((res) => {
+        return res.json();
+      })
+      .then((res) => {
+        if (res.refresh) {
+          setRefresh(1);
+          setShowCanJoinText(false);
+          history.push(`/movies?session_id=${session_id}`);
+        } else {
+          setShowCanJoinText(true);
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }
 
   return (
     <div className="bg-gray-50 min-h-screen">
@@ -100,6 +106,15 @@ const SessionCreated = () => {
               Share the link with whom you want to pick movies with. This page
               will automatically refresh, once they join.{" "}
             </p>
+            <button
+              onClick={callCanJoinApi}
+              className="text-gray-500 font-medium mt-4 underline"
+            >
+              Taking too long? Refresh now
+            </button>
+            <div className="mt-4">
+              {showCanJoinText ? "The other person hasn't joined yet 🙇🏻‍♂️" : null}
+            </div>
           </div>
         )}
       </div>

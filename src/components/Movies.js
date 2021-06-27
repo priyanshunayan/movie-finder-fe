@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import MatchedMovies from "./MatchedMovies";
 import SwipeMovies from "./SwipeMovie";
 import { useLocation } from "react-router-dom";
@@ -16,6 +16,9 @@ export default function Movies() {
     setTotalMatched(count);
   };
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <div className="min-h-screen bg-gray-50">
       <div>

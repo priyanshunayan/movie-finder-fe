@@ -118,6 +118,10 @@ const SwipeMovies = ({ session_id, updateMatchedCount }) => {
     }
   };
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div className="grid justify-items-center">
       {loading && (
