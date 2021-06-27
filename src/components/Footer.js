@@ -3,7 +3,7 @@ var quotes = require("random-movie-quotes");
 
 const Footer = () => {
   return (
-    <footer className="text-center text-xs p-4 text-gray-400 bg-gray-50 py-16">
+    <footer className="text-center text-xs p-4 text-gray-400 bg-gray-50 py-8">
       <p>
         Thanks for stopping by <span className="text-red-600">♥</span>
       </p>
