@@ -32,8 +32,6 @@ const Filters = () => {
   });
   const classes = useStyles();
 
-
-
   const registerQuery = async (values) => {
     fetch(`${DEV_API_URL}/register-query`, {
       method: "POST",
@@ -52,13 +50,13 @@ const Filters = () => {
         } else {
           alert("Request failed. Please try again");
         }
-          const can_join_socket = new WebSocket(
-            `${SOCKET_URL}/can_join/${session_id}`
-          );
-          can_join_socket.onopen = function () {
-            console.log("Can join Socket open.");
-          };
-          window.can_join_socket = can_join_socket;
+        const can_join_socket = new WebSocket(
+          `${SOCKET_URL}/can_join/${session_id}`
+        );
+        can_join_socket.onopen = function () {
+          console.log("Can join Socket open.");
+        };
+        window.can_join_socket = can_join_socket;
       })
       .catch((err) => {
         console.log("An error occurred", err);
@@ -253,7 +251,7 @@ const Filters = () => {
           <FormikProvider value={formik}>
             <form onSubmit={formik.handleSubmit}>
               <label htmlFor="email" className="block mb-2 font-bold">
-                Enter your name
+                Your name
               </label>
               <input
                 id="name"
@@ -268,7 +266,7 @@ const Filters = () => {
               <div className="font-bold mt-4 mb-2">Genre</div>
               <div className="grid grid-cols-2 gap-1">
                 {genreOptions.map((option) => (
-                  <label key={option} className="mb-1 block w-full py-1">
+                  <label key={option} className="mb-1 block w-full">
                     <Field
                       type="checkbox"
                       name="genre"

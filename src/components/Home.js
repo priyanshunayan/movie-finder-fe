@@ -7,7 +7,7 @@ const Home = () => {
   return (
     <div className="pageBackground">
       <main className="container px-4 lg:px-8 mx-auto min-h-screen flex flex-wrap content-center max-w-5xl">
-        <img src={Illustration} className="mb-8 w-48 block" />
+        <img src={Illustration} className="mb-8 w-48 lg:w-60 block" />
         <div>
           <h1 className="text-3xl lg:text-5xl mb-4 lg:mb-6 z-10 tracking-tight">
             <span className="font-bold block lg:mb-2">
@@ -17,7 +17,7 @@ const Home = () => {
           </h1>
           <h2 className="text-lg lg:text-2xl mb-6 lg:mb-8 max-w-5xl z-10 tracking-tight lg:leading-relaxed">
             Decide what to watch by starting a movie finding session. Set your
-            preferences and find movies you both like, faster.
+            preferences and find movies together, faster.
           </h2>
         </div>
 

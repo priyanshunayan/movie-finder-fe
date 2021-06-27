@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
+import helperImage from "../assets/images/match-helper.png";
 import { DEV_API_URL } from "../config";
 
 const MatchedMovies = ({ session_id }) => {
   const [matchedMovies, setMatchedMovies] = useState([]);
-  
+
   if (window.matched_movie_socket) {
     window.matched_movie_socket.onmessage = function (message) {
       let data = JSON.parse(message.data);
@@ -25,7 +26,7 @@ const MatchedMovies = ({ session_id }) => {
   }, []);
 
   return (
-    <div>
+    <div className="relative">
       <div className="p-2 bg-gray-100 border-b grid grid-flow-col gap-2 max-w-full overflow-x-scroll no-scrollbar h-28 lg:h-32 mb-8 auto-cols-max">
         {matchedMovies.length > 0 ? (
           matchedMovies.map((movie) => (
@@ -38,7 +39,10 @@ const MatchedMovies = ({ session_id }) => {
             </div>
           ))
         ) : (
-          <div className="card shadow-sm animate-pulse bg-gray-200 rounded-sm relative w-16 lg:w-20 h-24 lg:h-28"></div>
+          <div>
+            <div className="card shadow-sm animate-pulse bg-gray-300 rounded-sm relative w-16 lg:w-20 h-24 lg:h-28"></div>
+            <img src={helperImage} className="absolute w-48 left-16 top-10" />
+          </div>
         )}
       </div>
     </div>
