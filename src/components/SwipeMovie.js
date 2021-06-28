@@ -195,7 +195,7 @@ const SwipeMovies = ({ session_id, updateMatchedCount }) => {
         {moviesArray.length > 0 && (
           <div className="absolute -bottom-20 grid justify-items-center">
             <p className="text-xs text-gray-500 text-center ">
-              Swipe right to like a movie, left to dislike.
+              Swipe right to pick a movie, left to discard.
             </p>
             <Switch.Group as="div" className="flex items-center mt-4">
               <Switch
